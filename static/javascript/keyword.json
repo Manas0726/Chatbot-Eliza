@@ -1,0 +1,27 @@
+{
+  "Admission": {
+    "who can take admission": "Any 10th and 12th or other equivalent passouts can be addmitted according to mirit list after 10th the diploma is of 3 years while after 12th or equivalent diploma is of 2 years",
+    "how to take admission": "first enroll in maha dbt and the according to mirit list clgs will be allocated (as per your choice)",
+    "when it will start": "tentative dates for addmission is after 10th result and direct second year 12 th student is done after 12 th result",
+    "Fees": "OPEN=7750 \n OBC/Ews=4750 \n SC/ST/VJNT/SBC=1750   (per year fee exam fees are exempted)",
+    "Minimum percentage required": "Passed 10th Std./SSC examination or its equivalent, with at least 35% aggregate marks",
+    "Courses available ": "COMPUTER ENGINEERING, AIML ENGINEERING, CIVIL ENGINEERING, MECHANICAL ENGINEERING, ELECTRICAL ENGINEERING, ELECTRONICS & TELECOMMUNICATION ENGINEERING, INFORMATION TECHNOLOGY ENGINEERING, PACKAGING TECHNOLOGY, METALLURGICAL ENGINEERING, TEXTILE MANUFACTURE, MINING & MINE SURVEYING, AUTOMOBILE ENGINEERING, TRAVEL & TOURISM, MECHATRONICS ENGINEERING"
+  },
+  "Hostel": {
+    "who can take admission": "Anyone of the clg can be addmited according to mirit list but direct second year students are not allowed they can apply only in 3 rd year",
+    "Mess": "It is included in hostel fees ",
+    "Facilites": "300 sqft room for 2 students along with a bed,fan,tabel and chair",
+    "External appliances": "Only chargers are allowed and for other things permission are needed to be taken from officials"
+  },
+  "Scholarship": {
+    "who can apply": "Any one from reserved category along with open whose annual income is less tha 8,00,000 RS",
+    "Document requirement": "cast,income,domicile,allotment letter,addmission fee recipt,bank passbook zerox,adhar card zerox,ssc/hsc marksheet,previous year marksheet,declaration,Gap,Ration card zerox"
+  },
+  "Library": {
+    "Timing": "Open from 11 am to 5 pm (mon to sat) lunch break is from 2-3pm",
+    "Can we Re-issue": "Yes you can",
+    "Book borrow period": "It is of 15 days including the day when you borrow it",
+    "Book bank": "It is a library concept in which one can borrow multiple books for a year and you just have to pay 100 Rs"
+  },
+  "Courses": { "No data": "Till now data is not available" }
+}

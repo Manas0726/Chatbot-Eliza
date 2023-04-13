@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/css/add.css" />
+  <title>Welcome Admin</title>
+</head>
+<div class="navBar">
+  <h1>Admin Panel</h1>
+  <nav>
+    <ul class="ulList">
+      <li class="liList">
+        <a href="" class="modify">Modify <i class="fas fa-caret-down"></i></a>
+
+        <div class="dropdown-menu">
+          <ul class="ulSubList">
+            <li class="liSublist"><a href="/adminp/add">Add</a></li>
+            <li>
+              <a href="#">Update <i class="fas fa-caret-right"></i></a>
+
+              <div class="dropdown-menu-1">
+                <ul class="Uldropdown-menu-1">
+                  <li><a href="/adminp/updateKeyword">Keyword</a></li>
+                  <li><a href="/adminp/updateAnswer">Answer</a></li>
+                </ul>
+              </div>
+            </li>
+            <li><a href="/adminp/delete">Delete</a></li>
+          </ul>
+        </div>
+
+      <li class="liList"><a href="">Analytics</a></li>
+      <li class="liList"><a href="">FAQ's</a></li>
+      <button>Login</button>
+      <button>SignUp</button>
+
+      <div class="containerImg">
+        <img src="/static/images/user-icon.png" alt="" class="userImg" />
+      </div>
+    </ul>
+  </nav>
+  </div>
