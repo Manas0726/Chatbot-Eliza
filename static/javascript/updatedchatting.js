@@ -28,7 +28,7 @@ function UserResponse() {
       <div class="details">
         <p class="user-msg">${buttonName}</p>
       </div>
-      <img src="/static/images/logo-figma.png" alt="" />
+      <img class="userImg" src="/static/images/logo-figma.png" alt="" />
     `;
     chatBox.appendChild(userMsgDiv);
 
@@ -43,6 +43,7 @@ function UserResponse() {
 
         var img = document.createElement("img");
         img.setAttribute("src", "/static/images/logo-figma.png");
+        img.classList.add("userImg")
         img.style.width = "35px";
         img.style.height = "35px";
 
@@ -62,13 +63,13 @@ function UserResponse() {
           button.addEventListener("click", function () {
             content = this.textContent;
             var subButtonUserResponse = document.createElement("div");
-            subButtonUserResponse.classList.add("chat", "outgoing");
+            subButtonUserResponse.classList.add("chat", "outgoing", "userImg");
             subButtonUserResponse.innerHTML = `
 
             <div class="details">
            <p class="user-msg">${content}</p>
             </div>
-            <img src="/static/images/logo-figma.png" alt="" />
+            <img class="userImg" src="/static/images/logo-figma.png" alt="" />
               `;
             chatBox.appendChild(subButtonUserResponse);
 
@@ -80,13 +81,13 @@ function UserResponse() {
             .then((data) =>{
             var ans=data.subbuttonresponse
             var subbuttonresponse=JSON.parse(ans)
-
+            console.log(subbuttonresponse)
              var subButtonBotResponse = document.createElement("div");
-             subButtonBotResponse.classList.add("chat", "incoming");
+             subButtonBotResponse.classList.add("chat", "incoming", "userImg");
              subButtonBotResponse.innerHTML = `
-             <img src="/static/images/logo-figma.png" alt="" />
+             <img class="userImg" src="/static/images/logo-figma.png" alt="" />
              <div class="details">
-            <p class="user-msg">${subbuttonresponse}</p>
+             <pre>  <p class="user-msg"> ${subbuttonresponse}</p></pre>
              </div>
                `;
              chatBox.appendChild(subButtonBotResponse);

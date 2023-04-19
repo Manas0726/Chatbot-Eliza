@@ -1,6 +1,7 @@
 var KeywordResponseList = [];
 let selectedValue
 const jsonList = document.getElementById("jsonList");
+const result = document.getElementById('result')
 
 document.addEventListener("DOMContentLoaded", function (event) {
   const coreKey = document.getElementById("coreKey");
@@ -63,6 +64,7 @@ function inputUpdate(event) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data.message);
+      result.innerText = data.message
     })
   // }
 }

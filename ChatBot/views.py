@@ -9,31 +9,28 @@ model_path = './RasaBot/models'
 agent = Agent.load(model_path)
 
 
-# def rasa_chat(request,inputValue):
-#     response = agent.handle_text("Hii")
-#     bot_response = response[0]['text']
-#     print(bot_response)
-#     return JsonResponse({'msg': bot_response})
+def heropage(request):
+    #return render(request,"index.html")
+    return render(request,"Hero.html")
 
-# def rasachat(request, inputValue):
-#     # Construct the API endpoint URL
-#     api_url = "http://localhost:5005/webhooks/rest/webhook"
-    
-#     # Construct the payload for the Rasa API request
-#     payload = {
-#         "sender": "user",
-#         "message": inputValue
-#     }
-    
-#     # Send the request to the Rasa API using the POST method
-#     response = requests.post(api_url, json=payload)
-    
-#     # Parse the response JSON and extract the message text
-#     response_data = response.json()
-#     bot_message = response_data[0]["text"]
-        
-#     # Return the JSON response as a Django JsonResponse object
-#     return JsonResponse({"msg": bot_message})
+def chatpage(request):
+    return render(request,"Chat.html")
+
+def adminpage(request):
+    return render(request,"adminHeader.html")
+
+def add(request):
+    return render(request,"add.html")
+
+def updateAnswer(request):
+    return render(request,"updateAnswer.html")
+
+def delete(request):
+    return render(request,"delete.html")
+
+def updateKeyword(request):
+    return render(request,"updateKeyword.html")
+
 
 def rasachat(request, inputValue):
     api_url = "http://localhost:5005/webhooks/rest/webhook"
@@ -51,16 +48,6 @@ def rasachat(request, inputValue):
         # handle invalid JSON or missing data errors
         bot_message = "Sorry, there was an error processing your request."
     return JsonResponse({"msg": bot_message})
-
-
-def heropage(request):
-    #return render(request,"index.html")
-    return render(request,"Hero.html")
-
-def chatpage(request):
-    return render(request,"Chat.html")
-    
-
 
 
 def buttonmsg(request,buttonName):
@@ -87,25 +74,10 @@ def majorKeywordRetrival(request):
 def subbuttonmsg(request,corekey,content):
     with open('static/javascript/keyword.json','r') as f:
         data = json.load(f) 
-    subbuttonresponse=data[corekey][content]
+    text=data[corekey][content]
+    subbuttonresponse = format_text(text)    
     ans=json.dumps(subbuttonresponse)
     return JsonResponse({'subbuttonresponse':ans})
-
-
-def adminpage(request):
-    return render(request,"adminHeader.html")
-
-def add(request):
-    return render(request,"add.html")
-
-def updateAnswer(request):
-    return render(request,"updateAnswer.html")
-
-def delete(request):
-    return render(request,"delete.html")
-
-def updateKeyword(request):
-    return render(request,"updateKeyword.html")
 
 
 def keywordMsg(request,selectedValue):
@@ -173,3 +145,71 @@ def ansupdate(request,subKeyVal, inputField, updatedAnswer):
     with open('static/javascript/keyword.json', 'w') as f:
         json.dump(data, f)
     return JsonResponse({"message": "Answer updated successfully."})
+
+
+#---------------Formating---------------
+
+import string
+import nltk
+import spacy
+
+nlp = spacy.load("en_core_web_sm")
+
+
+def is_bullet_point(text):
+    bullet_tokens = ['*', '-']
+    for sent in nltk.sent_tokenize(text):
+        for token in nltk.word_tokenize(sent):
+            if token.startswith(tuple(bullet_tokens)):
+                return True
+    return False
+
+
+def format_text(text):
+    # Add bullet points to the text
+    lines = text.split('<br>')
+    bulleted_lines = []
+    for line in lines:
+        if line.strip() != '':
+            if ':' in line:
+                # Add a bullet point before each item in the list on a new line,
+                # with the initial letter of each item capitalized
+                line_parts = line.split(':')
+                prefix = line_parts[0].strip().capitalize()
+                items = line_parts[1].strip().split(',')
+                bulleted_lines.append(prefix + ':')
+                for item in items:
+                    bulleted_lines.append('\t- ' + item.strip().capitalize())
+            else:
+                # Remove the bullet point from the beginning of the line
+                if line.count(',') >= 2:
+                    words = line.split(',')
+                    bulleted_line = ''
+                    for i in range(len(words)):
+                        word = words[i].strip()
+                        if word != '':
+                            if i == 0:
+                                if line.count(',,') >= 1:
+                                    word_parts = word.split(',,')
+                                    first_word = word_parts[0].strip().capitalize()
+                                    second_word = word_parts[1].strip().capitalize()
+                                    bulleted_lines.append(first_word.capitalize() + ':')
+                                    bulleted_lines.append('\t- ' + second_word)
+                                    break
+                                else:
+                                    bulleted_line += '\t- ' + word.capitalize()
+                            else:
+                                if bulleted_line != '':
+                                    bulleted_lines.append(bulleted_line.strip() + ',')
+                                    bulleted_line = ''
+                                bulleted_line += '\t- ' + word.capitalize()
+                    if bulleted_line != '':
+                        bulleted_lines.append(bulleted_line.strip() + ',')
+                else:
+                    bulleted_lines.append(line.strip().capitalize())
+
+    # Join the lines to form the final text
+    bulleted_text = '\n'.join(bulleted_lines)
+
+    # Return the final formatted text
+    return bulleted_text

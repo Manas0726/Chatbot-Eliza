@@ -39,7 +39,7 @@ function inputFetch() {
   const inputField = document.getElementById("subKey").value;
   const textField = document.getElementById("textArea").value;
   const subKeyVal = document.getElementById("coreKey").value;
-  const result = document.getElementById("result")
+  const result = document.getElementById("result");
 
   if (subKeyVal === "" || inputField === "" || textField === "") {
     alert("Choose options!");
@@ -48,32 +48,21 @@ function inputFetch() {
     console.log(`Input field: ${inputField}`);
     console.log(`Text area: ${textField}`);
     fetch("/addElement/" + subKeyVal + "/" + inputField + "/" + textField + "/")
-    .then((response) => response.json())
-    .then((data) => {
-
-      // console.log(data.message);
-
-      
-      if (data.success) {
-        result.innerText = data.message
-        console.log(data.message);
-
-        // console.log("added successfully")
-        // console.log(data.success)
-        
-      } else {
-        // alert(data.message);
-        result.innerText = data.message
-        console.log("already exists")
-        // console.log(data.success)
-      }
-    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          result.innerText = data.message;
+          console.log(data.message);
+          document.getElementById("subKey").value = "";
+          document.getElementById("textArea").value = "";
+          location.reload();
+        } else {
+          result.innerText = data.message;
+          console.log("already exists");
+        }
+      });
   }
 }
 
-const form = document.getElementById("myForm");
-form.addEventListener("submit", function(event) {
-  event.preventDefault();
-  inputFetch();
-});
+
 

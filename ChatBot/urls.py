@@ -37,8 +37,4 @@ urlpatterns = [
     path('deleteElement/<str:subKeyVal>/<str:inputField>/',views.deleteElement,name='deleteElement'),
     path('updatedKey/<str:subKeyVal>/<str:inputField>/<str:updatedKey>/', views.keyupdate, name='updatedKey'),
     path('updatedAns/<str:subKeyVal>/<str:inputField>/<str:updatedAnswer>/', views.ansupdate, name='updatedAns')
-] 
-
-# serve static files during development
-# if settings.DEBUG:
-#     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
