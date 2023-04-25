@@ -17,7 +17,7 @@ def chatpage(request):
     return render(request,"Chat.html")
 
 def adminpage(request):
-    return render(request,"adminHeader.html")
+    return render(request,"admin.html")
 
 def add(request):
     return render(request,"add.html")
@@ -51,6 +51,13 @@ def rasachat(request, inputValue):
 
 
 def buttonmsg(request,buttonName):
+    #for analytics
+    with open('static/javascript/Analysis1.json','r') as f:
+        ana = json.load(f)
+    ana[buttonName]+=1
+    with open('static/javascript/Analysis1.json', 'w') as f:
+        json.dump(ana, f)
+
     with open('static/javascript/keyword.json','r') as f:
         data = json.load(f)
     mylist=[]
@@ -72,6 +79,13 @@ def majorKeywordRetrival(request):
 
      
 def subbuttonmsg(request,corekey,content):
+    #fro analytics
+    with open('static/javascript/Analysis2.json','r') as f:
+        ana = json.load(f)
+    ana[corekey][content]+=1
+    with open('static/javascript/Analysis2.json', 'w') as f:
+        json.dump(ana, f)
+
     with open('static/javascript/keyword.json','r') as f:
         data = json.load(f) 
     text=data[corekey][content]
@@ -96,6 +110,8 @@ def keywordMsg(request,selectedValue):
 def addElement(request,subKeyVal,inputField,textField):
     with open('static/javascript/keyword.json','r')as f:
         data=json.load(f)
+    with open('static/javascript/Analysis2.json','r')as f:
+        ana=json.load(f)
 
     if subKeyVal in data and inputField in data[subKeyVal]:
         a="Error: Subkeyword already exists."
@@ -104,10 +120,14 @@ def addElement(request,subKeyVal,inputField,textField):
     for i in data:
         if(subKeyVal==i):
             data[subKeyVal][inputField]=textField
+            ana[subKeyVal][inputField]=0
             a="Added successfully"
 
+    with open('static/javascript/Analysis2.json','w')as f:
+        json.dump(ana,f)
     with open('static/javascript/keyword.json', 'w') as f:
         json.dump(data, f)
+    
     return JsonResponse({"success": True, "message": "Subkeyword added successfully."})
 
 
@@ -115,9 +135,14 @@ def deleteElement(request,subKeyVal,inputField):
     
     with open('static/javascript/keyword.json','r')as f:
         data=json.load(f)
+    with open('static/javascript/Analysis2.json','r')as f:
+        ana=json.load(f)
 
     del data[subKeyVal][inputField]
+    del ana[subKeyVal][inputField]
 
+    with open('static/javascript/Analysis2.json','w')as f:
+        json.dump(ana,f)
     with open('static/javascript/keyword.json', 'w') as f:
         json.dump(data, f)
     
@@ -127,12 +152,18 @@ def deleteElement(request,subKeyVal,inputField):
 def keyupdate(request, subKeyVal, inputField, updatedKey):
     with open('static/javascript/keyword.json','r')as f:
         data=json.load(f)
+    with open('static/javascript/Analysis2.json','r')as f:
+        ana=json.load(f)
 
+    ana[subKeyVal][updatedKey]=ana[subKeyVal][inputField]
+    del ana[subKeyVal][inputField]
     data[subKeyVal][updatedKey]=data[subKeyVal][inputField]
     del data[subKeyVal][inputField]
 
     with open('static/javascript/keyword.json', 'w') as f:
         json.dump(data, f)
+    with open('static/javascript/Analysis2.json', 'w') as f:
+        json.dump(ana, f)
     return JsonResponse({"message": "keyword updated successfully."})
 
 def ansupdate(request,subKeyVal, inputField, updatedAnswer):
@@ -140,7 +171,6 @@ def ansupdate(request,subKeyVal, inputField, updatedAnswer):
         data=json.load(f)
 
     data[subKeyVal][inputField]=updatedAnswer
-    print(data[subKeyVal][inputField])
 
     with open('static/javascript/keyword.json', 'w') as f:
         json.dump(data, f)
@@ -167,7 +197,7 @@ def is_bullet_point(text):
 
 def format_text(text):
     # Add bullet points to the text
-    lines = text.split('<br>')
+    lines = text.split('\n')
     bulleted_lines = []
     for line in lines:
         if line.strip() != '':
@@ -213,3 +243,93 @@ def format_text(text):
 
     # Return the final formatted text
     return bulleted_text
+
+
+
+#----------------Analytics------------------
+import io
+import base64
+import matplotlib.pyplot as plt
+import matplotlib
+import os
+import time
+matplotlib.use('Agg')
+
+
+
+
+# def MajorKeywordAnalysis(request):
+#     with open('static/javascript/Analysis1.json','r') as f:
+#         ana = json.load(f)
+#     button_labels = list(ana.keys())
+#     click_counts = list(ana.values())
+
+#     plt.bar(button_labels, click_counts)
+#     # plt.xlabel('Button Labels')
+#     plt.ylabel('Frequently Clicked')
+#     img_bytes = io.BytesIO()
+#     plt.title('Major Keyword Analysis')
+#     file_name = 'scatter_{}.png'.format(int(time.time()))
+#     plt.savefig(file_name, format='png')
+#     with open(file_name, 'rb') as f:
+#         image_data = f.read()
+
+#     # Pass the image data to the template context as base64-encoded bytes
+#     image_data = base64.b64encode(image_data).decode('utf-8')
+#     context = {'image_data': image_data}
+#     return render(request, 'adminAnalytics.html', context)
+
+
+
+def MajorKeywordAnalysis(request):
+    with open('static/javascript/Analysis1.json','r') as f:
+        ana = json.load(f)
+    button_labels = list(ana.keys())
+    click_counts = list(ana.values())
+
+    plt.bar(button_labels, click_counts)
+    # plt.xlabel('Button Labels')
+    plt.ylabel('Frequently Clicked')
+    img_bytes = io.BytesIO()
+    plt.title('Major Keyword Analysis')
+    file_name = 'scatter_{}.png'.format(int(time.time()))
+    plt.savefig(file_name, format='png')
+    plt.close()  # Close the current figure
+
+    with open(file_name, 'rb') as f:
+        image_data = f.read()
+
+    # Pass the image data to the template context as base64-encoded bytes
+    image_data = base64.b64encode(image_data).decode('utf-8')
+    context = {'image_data': image_data}
+    return render(request, 'adminAnalytics.html', context)
+
+
+def SubKeywordAnalysis(request, major):
+    with open('static/javascript/Analysis2.json','r') as f:
+        ana = json.load(f)
+    button_labels = list(ana[major].keys())
+    click_counts = list(ana[major].values())
+
+    plt.bar(button_labels, click_counts)
+    # plt.xlabel('Button Labels')
+    plt.ylabel('Frequently Clicked')
+    img_bytes = io.BytesIO()
+    plt.title(major + " Analysis")
+    file_name = 'scatter_{}.png'.format(int(time.time()))
+
+    # Check if the file already exists and delete it
+    if os.path.exists(file_name):
+        os.remove(file_name)
+
+    plt.savefig(file_name, format='png')
+    plt.close()  # Close the current figure
+
+    with open(file_name, 'rb') as f:
+        image_data = f.read()
+    pageName = major + ".html"
+    # Pass the image data to the template context as base64-encoded bytes
+    image_data = base64.b64encode(image_data).decode('utf-8')
+    context = {'image_data': image_data}
+    return render(request, pageName, context)
+

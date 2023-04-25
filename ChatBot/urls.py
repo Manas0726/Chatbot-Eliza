@@ -31,10 +31,12 @@ urlpatterns = [
     path('adminp/updateKeyword/',views.updateKeyword, name="updateKeyword"),
     path('adminp/updateAnswer/',views.updateAnswer, name="updateAnswer"),
     path('adminp/delete/',views.delete, name="delete"),
+    path('adminp/majorA/', views.MajorKeywordAnalysis),
+    path('adminp/AnalyticsKey1/<str:major>/', views.SubKeywordAnalysis),
     path('coreKeyword/',views.majorKeywordRetrival),
     path('keywordMsg/<str:selectedValue>/',views.keywordMsg,name='keywordMsg'),
     path('addElement/<str:subKeyVal>/<str:inputField>/<str:textField>/',views.addElement,name='addElement'),
     path('deleteElement/<str:subKeyVal>/<str:inputField>/',views.deleteElement,name='deleteElement'),
     path('updatedKey/<str:subKeyVal>/<str:inputField>/<str:updatedKey>/', views.keyupdate, name='updatedKey'),
     path('updatedAns/<str:subKeyVal>/<str:inputField>/<str:updatedAnswer>/', views.ansupdate, name='updatedAns')
-]+ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

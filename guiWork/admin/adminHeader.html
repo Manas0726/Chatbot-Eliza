@@ -6,14 +6,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/static/css/adminHeader.css" />
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-  integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
+  <link rel="stylesheet" href="admin.css" />
   <title>Welcome Admin</title>
 </head>
 <div class="navBar">
@@ -21,7 +14,7 @@
   <nav>
     <ul class="ulList">
       <li class="liList">
-        <a href="" class="modify">Modify <i class="fas fa-caret-down"></i></a>
+        <a href="" class="modify">Modify <i class="fas fa-caret-down"></i></a> </li>
 
         <div class="dropdown-menu">
           <ul class="ulSubList">
@@ -40,17 +33,25 @@
           </ul>
         </div>
 
-      <li class="liList"><a href="">Analytics <i class="fas fa-caret-down"></i></a></li>
-      <div class="dropdown-menu-2">
-        <ul class="dropdown-menu-ul">
-          <li class="dropdown-menu-li"><a href="/adminp/majorA">Major</a></li>
-          <li class="dropdown-menu-li"><a href="/adminp/AnalyticsKey1/Admission">Admission</a></li>
-          <li class="dropdown-menu-li"><a href="/adminp/AnalyticsKey1/Hostel">Hostel</a></li>
-          <li class="dropdown-menu-li"><a href="/adminp/AnalyticsKey1/Scholarship">Scholarship</a></li>
-          <li class="dropdown-menu-li"><a href="/adminp/AnalyticsKey1/Library">Library</a></li>
-          <li class="dropdown-menu-li"><a href="/adminp/AnalyticsKey1/Courses">Courses</a></li>
+      <li class="liList"><a href="">Analytics <i class="fas fa-caret-down"></i> </a></li>
+
+      <div class="dropdown-menu">
+        <ul class="ulSubList">
+          <li class="liSublist"><a href="/adminp/add">Add</a></li>
+          <li>
+            <a href="#">Update <i class="fas fa-caret-right"></i></a>
+
+            <div class="dropdown-menu-1">
+              <ul class="Uldropdown-menu-1">
+                <li><a href="/adminp/updateKeyword">Keyword</a></li>
+                <li><a href="/adminp/updateAnswer">Answer</a></li>
+              </ul>
+            </div>
+          </li>
+          <li><a href="/adminp/delete">Delete</a></li>
         </ul>
       </div>
+
       <li class="liList"><a href="">FAQ's</a></li>
       <button>Login</button>
       <button>SignUp</button>
@@ -61,4 +62,3 @@
     </ul>
   </nav>
   </div>
-
